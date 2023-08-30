@@ -148,5 +148,5 @@ class CreateDataset:
 
 
 if __name__ == "__main__":
-    cursor_capture = CreateDataset()
-    cursor_capture.run()
+    dataset = CreateDataset()
+    dataset.run()
