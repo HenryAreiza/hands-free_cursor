@@ -27,10 +27,10 @@ audio_stream.start()
 sd.sleep(int(2000))
 counter = 0
 print('\nListening...')
-while counter<10:
+while counter<20:
     sd.sleep(int(500))
     audio_data = np.concatenate(audio_buffer, axis=0)
-    if audio_data.max() > 0.2:
+    if audio_data.max() > 0.3:
         sd.sleep(int(500))
         audio_data = np.concatenate(audio_buffer, axis=0)
         audio_data = decimate(audio_data[:,0], 3)
