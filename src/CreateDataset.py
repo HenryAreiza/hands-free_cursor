@@ -20,7 +20,7 @@ from pynput.mouse import Listener, Button
 class CreateDataset:
     def __init__(self):
         # Create data folders
-        self.DATA_PATH = os.path.join('..', 'data')
+        self.DATA_PATH = os.path.join('data', 'deivid')
         self.FOLDER_PATH = os.path.join(self.DATA_PATH,datetime.datetime.now().strftime("%Y_%m_%d-%H_%M_%S"))
         self.IMGS_PATH = os.path.join(self.FOLDER_PATH,'images')
         os.mkdir(self.FOLDER_PATH)
