@@ -35,6 +35,9 @@ class CreateDataset:
         self.location_history = []
         self.eyes_capture = None
         self.location = None
+        self.im_width = 0
+        self.im_height = 0
+        self.im_depth = 0
 
     def on_click(self, x, y, button, pressed):
         """
@@ -59,12 +62,11 @@ class CreateDataset:
         """
         Saves the click history, eye history, and location history into a CSV file.
         """
-        header = ['file_name', 'im_width', 'im_height', 'im_depth', 'ref_x', 'ref_y', 'ref_w', 'ref_h', 'click_x', 'click_y']
+        header = ['file_name', 'ref_x', 'ref_y', 'ref_w', 'ref_h', 'click_x', 'click_y']
         data = []
-        for i, (click, image, location) in enumerate(zip(self.click_history, self.eyes_history, self.location_history)):
+        for i, (click, location) in enumerate(zip(self.click_history, self.location_history)):
             name = [f'{i}.jpg']
-            im_shape = list(image.shape)
-            data.append(name + im_shape + location + click)
+            data.append(name + location + click)
         with open(os.path.join(self.FOLDER_PATH, 'data_info.csv'), 'w', newline='') as csvfile:
             csv_writer = csv.writer(csvfile)
             csv_writer.writerow(header)
@@ -80,6 +82,9 @@ class CreateDataset:
             'date': self.FOLDER_PATH[-19:],
             'screen_width': screen_size.width,
             'screen_height': screen_size.height,
+            'im_width': self.im_width,
+            'im_height': self.im_height, 
+            'im_depth': self.im_depth
         }
         with open(os.path.join(self.FOLDER_PATH, 'data_info.json'), 'w') as json_file:
             json.dump(data_info, json_file, indent=4)
@@ -101,7 +106,8 @@ class CreateDataset:
 
         # Open the video capture
         self.capture = cv2.VideoCapture(0)
-        min_size = int(min(list(pyautogui.size()))/4)
+        clahe = cv2.createCLAHE(clipLimit=5.0, tileGridSize=(8,8))
+        min_size = int(min(list(pyautogui.size()))/7)
 
         while True:
             # Read the current frame from the video capture
@@ -111,7 +117,6 @@ class CreateDataset:
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
             # Histogram equalization
-            clahe = cv2.createCLAHE(clipLimit=5.0, tileGridSize=(8,8))
             gray = clahe.apply(gray)
 
             # Perform face detection
@@ -141,6 +146,8 @@ class CreateDataset:
         # Release the video capture and close the window
         self.capture.release()
         cv2.destroyAllWindows()
+
+        self.im_height, self.im_width, self.im_depth = frame.shape
 
         self.save_csv()
         print('\nCSV file saved!')
