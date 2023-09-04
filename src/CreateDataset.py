@@ -101,6 +101,7 @@ class CreateDataset:
 
         # Open the video capture
         self.capture = cv2.VideoCapture(0)
+        min_size = int(min(list(pyautogui.size()))/4)
 
         while True:
             # Read the current frame from the video capture
@@ -109,8 +110,13 @@ class CreateDataset:
             # Convert the frame to grayscale for face detection
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
+            # Histogram equalization
+            clahe = cv2.createCLAHE(clipLimit=5.0, tileGridSize=(8,8))
+            gray = clahe.apply(gray)
+
             # Perform face detection
-            faces = self.eye_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(100, 100))
+            faces = self.eye_cascade.detectMultiScale(gray, scaleFactor=1.1,
+                                                      minNeighbors=5, minSize=(min_size, min_size))
 
             # Draw rectangles around the detected eyes
             for x, y, w, h in faces:
