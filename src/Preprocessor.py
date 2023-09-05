@@ -50,7 +50,7 @@ class Preprocessor:
         return hist_image
     
     @staticmethod
-    def apply(image, kernel_size=None):
+    def apply(image, limit=5.0, grid=(8,8), kernel_size=None):
         """
         Apply a histogram equalization to the image.
         Args:
@@ -62,7 +62,7 @@ class Preprocessor:
         image_ycrcb = cv2.cvtColor(image, cv2.COLOR_BGR2YCrCb)
 
         # create a CLAHE object
-        clahe = cv2.createCLAHE(clipLimit=5.0, tileGridSize=(8,8))
+        clahe = cv2.createCLAHE(clipLimit=limit, tileGridSize=grid)
         image_ycrcb[:,:,0] = clahe.apply(image_ycrcb[:,:,0])
         image_ycrcb = cv2.cvtColor(image_ycrcb, cv2.COLOR_YCrCb2BGR)
         
