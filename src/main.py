@@ -11,7 +11,7 @@ from Preprocessor import Preprocessor
 inputs = [None, None, True]
 def move_cursor():
     # Getting back the eyes model:
-    with open(os.path.join('models', 'eyes_model', 'model-20230905_113004.pkl'), 'rb') as f:
+    with open(os.path.join('models', 'eyes_model', 'model-20230906_084133.pkl'), 'rb') as f:
         eyes_model = pickle.load(f)
         # eyes_model.summary()
 
@@ -21,7 +21,7 @@ def move_cursor():
     # Create an instance of the Cursor class
     cursor = Cursor()
 
-    predictions = np.zeros((10,2))
+    predictions = np.zeros((5,2))
 
     print('\nCursor control started...\n')
     while inputs[2]:
