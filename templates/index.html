@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Canvas Drawing App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <canvas id="canvas" width="500" height="500"></canvas>
+    <div id="x">X: {{ canvas_data.x }}</div>
+    <div id="y">Y: {{ canvas_data.y }}</div>
+    <div id="color">Color: {{ canvas_data.color }}</div>
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+</body>
+</html>
