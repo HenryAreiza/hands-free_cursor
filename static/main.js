@@ -1,50 +1,37 @@
 document.addEventListener('DOMContentLoaded', function () {
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
-    const xValue = document.getElementById('xValue');
-    const yValue = document.getElementById('yValue');
-    const colorValue = document.getElementById('colorValue');
-    const demoButton = document.getElementById('demoButton');
+    const drawBtn = document.getElementById('drawBtn');
+    const xInput = document.getElementById('x');
+    const yInput = document.getElementById('y');
+    const colorInput = document.getElementById('color');
+    const pointList = document.getElementById('pointList');
 
-    function drawPoint(x, y, color) {
-        ctx.fillStyle = color;
-        ctx.beginPath();
-        ctx.arc(x * canvas.width, y * canvas.height, 5, 0, Math.PI * 2);
-        ctx.fill();
-    }
+    drawBtn.addEventListener('click', function () {
+        const x = parseFloat(xInput.value);
+        const y = parseFloat(yInput.value);
+        const color = colorInput.value;
 
-    function updateValues(x, y, color) {
-        xValue.textContent = x.toFixed(2);
-        yValue.textContent = y.toFixed(2);
-        colorValue.textContent = color;
-    }
+        // Ensure x and y are within the canvas boundaries
+        if (x >= 0 && x <= 1 && y >= 0 && y <= 1) {
+            // Draw the point on the canvas
+            ctx.fillStyle = color;
+            ctx.beginPath();
+            ctx.arc(x * canvas.width, y * canvas.height, 5, 0, Math.PI * 2);
+            ctx.fill();
 
-    demoButton.addEventListener('click', function () {
-        const randomX = Math.random();
-        const randomY = Math.random();
-        const randomColor = getRandomColor();
-        
-        drawPoint(randomX, randomY, randomColor);
-        updateValues(randomX, randomY, randomColor);
+            // Add the point to the list
+            const pointItem = document.createElement('li');
+            pointItem.style.color = color;
+            pointItem.textContent = `(${x}, ${y})`;
+            pointList.appendChild(pointItem);
 
-        // Send the data to the server
-        fetch('/draw_point', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ x: randomX, y: randomY, color: randomColor }),
-        })
-            .then(response => response.json())
-            .then(data => console.log(data));
-    });
-
-    function getRandomColor() {
-        const letters = '0123456789ABCDEF';
-        let color = '#';
-        for (let i = 0; i < 6; i++) {
-            color += letters[Math.floor(Math.random() * 16)];
+            // Clear input values
+            xInput.value = '';
+            yInput.value = '';
+            colorInput.value = '';
+        } else {
+            alert('Please enter valid coordinates (0.0 - 1.0) for X and Y.');
         }
-        return color;
-    }
+    });
 });

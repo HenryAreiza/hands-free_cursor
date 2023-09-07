@@ -1,35 +1,72 @@
+/* Body styles */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
     margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+    text-align: center;
+}
+
+/* Header styles */
+h1 {
+    margin-top: 20px;
+    color: #333;
+}
+
+/* Canvas styles */
+canvas {
+    border: 1px solid #333;
+    margin: 20px auto;
+    display: block;
+}
+
+/* Form styles */
+form {
+    margin: 10px auto;
+    width: 80%;
+    max-width: 400px;
+    background-color: #fff;
+    padding: 10px;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="number"],
+select {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+button[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Points list styles */
+h2 {
+    margin-top: 20px;
+    color: #333;
+}
+
+ul {
+    list-style-type: none;
     padding: 0;
 }
 
-.container {
-    text-align: center;
-    margin-top: 20px;
-}
-
-canvas {
-    border: 1px solid #000;
-}
-
-.output {
-    display: inline-block;
-    margin-top: 20px;
-    text-align: left;
-}
-
-button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #007BFF;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-button:hover {
-    background-color: #0056b3;
+li {
+    margin-bottom: 5px;
 }
