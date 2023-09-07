@@ -1,31 +1,50 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener('DOMContentLoaded', function () {
     const canvas = document.getElementById('canvas');
-    const context = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d');
+    const xValue = document.getElementById('xValue');
+    const yValue = document.getElementById('yValue');
+    const colorValue = document.getElementById('colorValue');
+    const demoButton = document.getElementById('demoButton');
 
-    // Function to draw a point
     function drawPoint(x, y, color) {
-        context.fillStyle = color;
-        context.beginPath();
-        context.arc(x * canvas.width, y * canvas.height, 3, 0, 2 * Math.PI);
-        context.fill();
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.arc(x * canvas.width, y * canvas.height, 5, 0, Math.PI * 2);
+        ctx.fill();
     }
 
-    // Update the values on the page
-    function updateValues() {
-        const xDiv = document.getElementById('x');
-        const yDiv = document.getElementById('y');
-        const colorDiv = document.getElementById('color');
-
-        xDiv.textContent = `X: ${canvas_data.x.toFixed(2)}`;
-        yDiv.textContent = `Y: ${canvas_data.y.toFixed(2)}`;
-        colorDiv.textContent = `Color: ${canvas_data.color}`;
+    function updateValues(x, y, color) {
+        xValue.textContent = x.toFixed(2);
+        yValue.textContent = y.toFixed(2);
+        colorValue.textContent = color;
     }
 
-    // Request updates every second
-    setInterval(updateValues, 1000);
+    demoButton.addEventListener('click', function () {
+        const randomX = Math.random();
+        const randomY = Math.random();
+        const randomColor = getRandomColor();
+        
+        drawPoint(randomX, randomY, randomColor);
+        updateValues(randomX, randomY, randomColor);
+
+        // Send the data to the server
+        fetch('/draw_point', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ x: randomX, y: randomY, color: randomColor }),
+        })
+            .then(response => response.json())
+            .then(data => console.log(data));
+    });
+
+    function getRandomColor() {
+        const letters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
 });
-
-// Fetch data from the server
-fetch('/demo')
-    .then(response => response.text())
-    .then(data => console.log(data));

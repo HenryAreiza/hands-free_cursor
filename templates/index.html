@@ -2,14 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Canvas Drawing App</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <canvas id="canvas" width="500" height="500"></canvas>
-    <div id="x">X: {{ canvas_data.x }}</div>
-    <div id="y">Y: {{ canvas_data.y }}</div>
-    <div id="color">Color: {{ canvas_data.color }}</div>
+    <div class="container">
+        <canvas id="canvas" width="500" height="500"></canvas>
+        <div class="output">
+            <p>X: <span id="xValue">{{ last_x }}</span></p>
+            <p>Y: <span id="yValue">{{ last_y }}</span></p>
+            <p>Color: <span id="colorValue">{{ last_color }}</span></p>
+        </div>
+        <button id="demoButton">Demo</button>
+    </div>
     <script src="{{ url_for('static', filename='main.js') }}"></script>
 </body>
 </html>
