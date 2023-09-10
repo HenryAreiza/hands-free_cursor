@@ -1,7 +1,7 @@
 """
-Cursor class and mouse actions funtion
+Cursor class and mouse actions function
 
-Author: HenRick69
+Author: HenryAreiza
 Date: 08/09/2023
 """
 

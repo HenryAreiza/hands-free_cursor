@@ -1,11 +1,11 @@
 """
 Create Dataset Script
 
-This script captures camera images when a left mouse click is detected. It uses OpenCV and
+This script captures camera images for different head positions. It uses OpenCV and
 mediapipe libraries to detect faces in real time. Captured images and relevant data are
 saved in folders, and a JSON file contains information about the capture session.
 
-Author: HenRick69
+Author: HenryAreiza
 Date: 06/09/2023
 """
 
@@ -19,9 +19,42 @@ import mediapipe as mp
 from pynput.mouse import Listener, Button
 
 class CreateDataset:
+    """
+    A class for creating the dataset used to train the FacePosition AI model.
+
+    This class is responsible for capturing camera images for different head positions.
+    It creates data folders, handles face detection, records image data, and saves captured
+    images along with relevant information.
+
+    Attributes:
+        DATA_PATH (str): Path to the dataset folder.
+        FOLDER_PATH (str): Path to the current capture session folder.
+        IMGS_PATH (str): Path to the folder where captured images are saved.
+        face_detection: An instance of the MediaPipe Face Detection component.
+        drawing: An instance of MediaPipe's drawing utilities.
+        faces_history (list): A list to store captured face images.
+        location_history (list): A list to store face bounding box locations.
+        keypoints_history (list): A list to store relative keypoints of the detected face.
+        labels_history (list): A list to store labels for captured images.
+        face_capture: The currently captured face image.
+        location: The bounding box location of the detected face.
+        keypoints: Relative keypoints of the detected face.
+        im_width (int): Width of the camera frame.
+        im_height (int): Height of the camera frame.
+        im_depth (int): Depth of the camera frame.
+        flag (bool): A flag indicating whether data capture is active.
+        label (int): The label/index for the current capture session.
+        counter (int): A counter to track the number of captured images.
+        limit (int): The maximum number of images to capture for each label.
+        labels (list): A list of label names corresponding to head positions.
+    """
+    
     def __init__(self):
+        """
+        Initializes the CreateDataset class.
+        """
         # Create data folders
-        self.DATA_PATH = os.path.join('data', 'henry2')
+        self.DATA_PATH = os.path.join('data', 'subject_0')
         self.FOLDER_PATH = os.path.join(self.DATA_PATH,datetime.datetime.now().strftime("%Y_%m_%d-%H_%M_%S"))
         self.IMGS_PATH = os.path.join(self.FOLDER_PATH,'images')
         os.mkdir(self.FOLDER_PATH)
@@ -45,7 +78,7 @@ class CreateDataset:
         self.flag = False
         self.label = 0
         self.counter = 0
-        self.limit = 100
+        self.limit = 10
         self.labels = ['center', 'up', 'left/up', 'left', 'left/down',
                        'down', 'right/down', 'right', 'right/up']
 
@@ -53,6 +86,12 @@ class CreateDataset:
         """
         Callback function for mouse click events.
         Records left click positions and associated eye images.
+
+        Args:
+            _: The x-coordinate of the mouse click (unused).
+            __: The y-coordinate of the mouse click (unused).
+            button: The button that was clicked.
+            pressed: A boolean indicating whether the button was pressed or released.
         """
         if pressed:
             if button == Button.left:
@@ -62,6 +101,9 @@ class CreateDataset:
     def capture_camera_image(self):
         """
         Captures an image from the camera and returns it.
+
+        Returns:
+            numpy.ndarray: The captured camera image.
         """
         _, frame = self.capture.read()
         return frame
@@ -103,7 +145,11 @@ class CreateDataset:
 
     def save_image(self, image, prefix):
         """
-        Saves the captured eye image to a file.
+        Saves the captured image to a file.
+
+        Args:
+            image (numpy.ndarray): The captured image.
+            prefix (str): The filename prefix for the saved image.
         """
         file_name = f"{prefix}.jpg"
         cv2.imwrite(os.path.join(self.IMGS_PATH, file_name), image)
@@ -134,7 +180,7 @@ class CreateDataset:
             # Perform face detection
             results = face_detection.process(frame_rgb)
 
-            # Draw face bounding boxes
+            # Read the reference and landmarks from the detected face
             if results.detections:
                 for detection in results.detections:                    
                     self.location = [detection.location_data.relative_bounding_box.xmin,
@@ -156,7 +202,7 @@ class CreateDataset:
                     self.drawing.draw_detection(frame, detection)
                     break
 
-            # Draw rectangles around the detected eyes
+            # Save the reference and landmarks from the detected face
             if self.flag:
                 self.faces_history.append(self.face_capture)
                 self.location_history.append(self.location)
