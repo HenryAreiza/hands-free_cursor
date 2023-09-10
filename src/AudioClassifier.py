@@ -21,21 +21,21 @@ class AudioClassifier:
     Attributes:
         verbose (boolean): Print (or not) detected commands
         vocab (list): Vocabulary of valid commands
-        sensitivity (float): Microphone sensitivity 
+        sensitivity (float): Microphone sensitivity (0.0 to 1.0)
         state (list): Last detected command and flag for 'new detected command'
         audio_buffer (list): A list to store audio buffer and flag for data availability.
         pipe: The Hugging Face Transformers pipeline for audio classification.
         audio_stream: The sounddevice audio input stream.
     """
 
-    def __init__(self, verbose=False):
+    def __init__(self, sensitivity=0.7, verbose=False):
         """
         Initializes the AudioClassifier class.
         """
         self.verbose = verbose
         self.vocab = ["left", "right", "up", "down", "go", "follow",
                       "on", "off", "one", "two", "three", "stop"]
-        self.sensitivity = 0.7
+        self.sensitivity = sensitivity
         self.state = ['', True]
         self.audio_buffer = [None, None, False]
 
