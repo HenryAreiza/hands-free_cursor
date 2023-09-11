@@ -26,6 +26,7 @@ This GitHub repository represents a comprehensive application for controlling th
     - [Movement control](#movement-control)
     - [Running the Application](#running-the-application)
     - [Testing Individual Components](#testing-individual-components)
+  - [HuggingFace space](#huggingface-space)
   - [Authors](#authors)
   - [License](#license)
 
@@ -134,6 +135,10 @@ This script lets you test the face detection and cursor positioning component se
 ```bash
 python src/FacePosition.py
 ```
+
+## HuggingFace space
+
+In case you want to test the AI models used in this project, without having to install anything on your machine, you can take a look at the [HuggingFace Space](https://huggingface.co/spaces/HenRick69/Hands-free_Cursor) created for this purpose.
 
 ## Authors
 - [HenryAreiza](https://github.com/HenryAreiza)
