@@ -11,7 +11,11 @@ import pickle
 import pyautogui
 import numpy as np
 import mediapipe as mp
-from src.Cursor import Cursor
+
+try:
+    from src.Cursor import Cursor
+except ModuleNotFoundError:
+    from Cursor import Cursor 
 
 class FacePosition:
     """
