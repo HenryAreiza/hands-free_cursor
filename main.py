@@ -51,9 +51,9 @@ Note:
 - This application is designed to provide hands-free control and enhance accessibility for users with motor disabilities.
 """
 
-from AudioClassifier import AudioClassifier
-from FacePosition import FacePosition
-from Cursor import Cursor, mouse_action
+from src.AudioClassifier import AudioClassifier
+from src.FacePosition import FacePosition
+from src.Cursor import Cursor, mouse_action
 import threading
 import argparse
 import cv2

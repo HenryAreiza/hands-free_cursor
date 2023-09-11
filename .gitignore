@@ -163,5 +163,6 @@ cython_debug/
 #.idea/
 
 # Other folders
-data/*
-models/*
+data+/*
+models+/*
+models/speech_commands_model/*
