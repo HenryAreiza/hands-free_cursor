@@ -89,17 +89,18 @@ Here are the available voice commands and their corresponding actions:
 ### Movement control
 You can control the cursor movement with slight movements of your head in an intuitive way. The following images represent the different movements that the model can recognize:
 
-| ![Center](media/0.jpg) | ![Up](media/1.jpg) | ![Left/Up](media/8.jpg) |
+| <img src="media/0.jpg" alt="Center" width="200" height="210"> | <img src="media/1.jpg" alt="Up" width="200" height="210"> | <img src="media/8.jpg" alt="Left/Up" width="200" height="210"> |
 |:--:|:--:|:--:|
 | *Center* | *Up* | *Left/Up* |
 
-| ![Left](media/7.jpg) | ![Left/Down](media/6.jpg) | ![Down](media/5.jpg) |
+| <img src="media/7.jpg" alt="Left" width="200" height="210"> | <img src="media/6.jpg" alt="Left/Down" width="200" height="210"> | <img src="media/5.jpg" alt="Down" width="200" height="210"> |
 |:--:|:--:|:--:|
 | *Left* | *Left/Down* | *Down* |
 
-| ![Right/Down](media/4.jpg) | ![Right](media/3.jpg) | ![Right/Up](media/2.jpg) |
+| <img src="media/4.jpg" alt="Right/Down" width="200" height="210"> | <img src="media/3.jpg" alt="Right" width="200" height="210"> | <img src="media/2.jpg" alt="Right/Up" width="200" height="210"> |
 |:--:|:--:|:--:|
 | *Right/Down* | *Right* | *Right/Up* |
+
 
 
 ### Running the Application
