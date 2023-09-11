@@ -1,7 +1,7 @@
 """
 FacePosition class
 
-Author: HenRick69
+Author: HenryAreiza
 Date: 08/09/2023
 """
 
@@ -11,7 +11,11 @@ import pickle
 import pyautogui
 import numpy as np
 import mediapipe as mp
-from Cursor import Cursor
+
+try:
+    from src.Cursor import Cursor
+except ModuleNotFoundError:
+    from Cursor import Cursor 
 
 class FacePosition:
     """
@@ -40,7 +44,7 @@ class FacePosition:
         self.screen_size = np.array(pyautogui.size())
 
         # Load the cursor movement model
-        with open(os.path.join('models', 'cursor_model.pkl'), 'rb') as f:
+        with open(os.path.join('models', 'cursor_movement_model.pkl'), 'rb') as f:
             self.cursor_model = pickle.load(f)
 
         # Initialize the MediaPipe Face Detection component
@@ -62,7 +66,7 @@ class FacePosition:
         keypoints = (keypoints - reference[0]) / reference[1]
 
         # Recognize the head position
-        move = self.cursor_model.predict(keypoints.T.reshape((1, -1)))[0]
+        move = self.cursor_model.predict(keypoints.reshape((1, -1)))[0]
 
         # Move the cursor
         move = self.movement[move] * 10 * self.speed / self.screen_size

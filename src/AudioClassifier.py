@@ -1,7 +1,7 @@
 """
 AudioClassifier class
 
-Author: HenRick69
+Author: HenryAreiza
 Date: 08/09/2023
 """
 
@@ -21,26 +21,32 @@ class AudioClassifier:
     Attributes:
         verbose (boolean): Print (or not) detected commands
         vocab (list): Vocabulary of valid commands
-        sensitivity (float): Microphone sensitivity 
+        sensitivity (float): Microphone sensitivity (0.0 to 1.0)
         state (list): Last detected command and flag for 'new detected command'
         audio_buffer (list): A list to store audio buffer and flag for data availability.
+        MODEL_PATH (str): Path to the pretrained AI model directory.
         pipe: The Hugging Face Transformers pipeline for audio classification.
         audio_stream: The sounddevice audio input stream.
     """
 
-    def __init__(self, verbose=False):
+    def __init__(self, sensitivity=0.7, verbose=False):
         """
         Initializes the AudioClassifier class.
         """
         self.verbose = verbose
         self.vocab = ["left", "right", "up", "down", "go", "follow",
                       "on", "off", "one", "two", "three", "stop"]
-        self.sensitivity = 0.7
+        self.sensitivity = sensitivity
         self.state = ['', True]
         self.audio_buffer = [None, None, False]
 
         # Load the audio classification pipeline
-        self.pipe = pipeline("audio-classification", model=os.path.join('models', 'audio_model'))
+        self.MODEL_PATH = os.path.join('models', 'speech_commands_model')
+        if os.path.isdir(self.MODEL_PATH):
+            self.pipe = pipeline("audio-classification", model=self.MODEL_PATH)
+        else:
+            self.pipe = pipeline("audio-classification", model="0xb1/wav2vec2-base-finetuned-speech_commands-v0.02")
+            self.pipe.save_pretrained(self.MODEL_PATH)
 
         # Initialize the audio input stream
         self.audio_stream = sd.InputStream(callback=self.audio_callback, channels=1,
