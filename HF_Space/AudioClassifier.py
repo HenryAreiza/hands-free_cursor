@@ -5,7 +5,8 @@ Author: HenryAreiza
 Date: 08/09/2023
 """
 
-import wave
+from scipy.io import wavfile
+from scipy.signal import decimate
 from transformers import pipeline
 
 class AudioClassifier:
@@ -40,15 +41,14 @@ class AudioClassifier:
         Returns:
             result (str): The classified command label.
         """
-        with wave.open(audio_path, "rb") as wave_file:
-            fs = wave_file.getframerate()
-
-        result = self.pipe(audio_path)[0]["label"]
+        _, audio = wavfile.read(audio_path)
+        audio = decimate(audio, 3)
+        result = self.pipe(audio)[0]["label"]
 
         if result not in self.vocab:
             result = 'unknown'
 
-        return str(fs) + result
+        return result
 
    
 

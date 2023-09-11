@@ -29,7 +29,10 @@ audio_commands = gr.Interface(
     )
 
 
-demo = gr.TabbedInterface([cursor_movement, audio_commands])
+demo = gr.TabbedInterface([cursor_movement, audio_commands],
+                          title = 'Hands-free Cursor Application',
+                          tab_names = ['Cursor movement controller', 'Speech commands recognition'],
+                          theme = gr.themes.Soft())
 
 
 if __name__ == "__main__":
