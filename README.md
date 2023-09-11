@@ -4,7 +4,7 @@
     <a href="LICENSE" alt="License">
         <img src="https://img.shields.io/badge/license-Apache_2.0-blue" /></a>
     <a href="PLATFORM" alt="Platform">
-        <img src="https://img.shields.io/badge/platform-linux--64,_macOS,_windows-lightgray" /></a>  
+        <img src="https://img.shields.io/badge/platform-linux--64,_macOS,_windows-red" /></a>  
     <a href="CONTRIBUTORS" alt="Contributors">
         <img src="https://img.shields.io/badge/contributors-2-brightgreen" /></a>                
 </p>
