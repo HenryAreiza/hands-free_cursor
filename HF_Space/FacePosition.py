@@ -29,7 +29,7 @@ class FacePosition:
         """
         Initializes the FaceCursorController class.
         """
-        self.movement = ['Center', 'Up', 'Left/Up', 'Left', 'Left/Down', 'Down', 'Right/Down', 'Right', 'Right/Up']
+        self.movement = ['Center', 'Up', 'Right/Up', 'Right', 'Right/Down', 'Down', 'Left/Down', 'Left', 'Left/Up']
         self.images = [cv2.imread(os.path.join('media', str(i)+'.png')) for i in range(9)]
 
         # Load the cursor movement model
