@@ -54,9 +54,11 @@ Note:
 from src.AudioClassifier import AudioClassifier
 from src.FacePosition import FacePosition
 from src.Cursor import Cursor, mouse_action
+from transformers import pipeline
 import threading
 import argparse
 import cv2
+import os
 
 if __name__ == "__main__":
     """
@@ -76,6 +78,11 @@ if __name__ == "__main__":
     parser.add_argument('--verbose', type=int, default=1, help="Enable verbose mode (1 (true)/ 0 (false))")
     parser.add_argument('--mic_sens', type=float, default=0.7, help="Microphone sensitivity (0.0 to 1.0)")
     args = parser.parse_args()
+
+    # Download the speech commands classification model if it's the first time running the application
+    if not os.path.isdir(os.path.join('models', 'speech_commands_model')):
+        pipe = pipeline("audio-classification", model="0xb1/wav2vec2-base-finetuned-speech_commands-v0.02")
+        pipe.save_pretrained(os.path.join('models', 'speech_commands_model'))
 
     # Create an instance of the AudioClassifier class
     audio_classifier = AudioClassifier(sensitivity=args.mic_sens)
