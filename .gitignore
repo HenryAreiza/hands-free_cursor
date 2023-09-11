@@ -166,3 +166,4 @@ cython_debug/
 data+/*
 models+/*
 models/speech_commands_model/*
+HF_Space/*
