@@ -6,6 +6,9 @@ __pycache__/
 # C extensions
 *.so
 
+# Gradio
+flagged/
+
 # Distribution / packaging
 .Python
 build/
@@ -159,4 +162,8 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-data/*
+# Other folders
+data+/*
+models+/*
+models/speech_commands_model/*
+HF_Space/*
