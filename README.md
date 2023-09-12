@@ -13,6 +13,9 @@
 
 This GitHub repository represents a comprehensive application for controlling the computer's cursor and performing various mouse actions using voice commands and head position. This application is designed to provide hands-free control and enhance accessibility for users with motor disabilities. It integrates three major components: audio classification, face detection for cursor positioning, and mouse action execution.
 
+<p align="center">
+<img src="https://img1.picmix.com/output/stamp/normal/0/1/7/6/1756710_32c3f.gif" alt="Cursor gif" width="125" height="125"/>
+</p>
 
 ## Table of Contents
 
